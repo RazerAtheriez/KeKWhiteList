@@ -4,11 +4,11 @@ import me.PWRazer.keKWhiteList.ConfigManager;
 import me.PWRazer.keKWhiteList.WhitelistManager;
 import me.PWRazer.keKWhiteList.KeKWhiteList;
 
-import java.time.Duration;
-import java.time.Instant;
-import java.util.Map;
 import java.util.Set;
 
+/**
+ * API для управления постоянным whitelist'ом в плагине KeKWhiteList.
+ */
 public class KeKWhiteListAPI {
     private final KeKWhiteList plugin;
     private final ConfigManager configManager;
@@ -21,22 +21,22 @@ public class KeKWhiteListAPI {
     }
 
     /**
-     * Проверяет, находится ли игрок в постоянном или временном whitelist'е.
+     * Проверяет, находится ли игрок в постоянном whitelist'е.
      *
      * @param username Имя игрока.
-     * @return true, если игрок в whitelist'е (постоянном или временном), иначе false.
+     * @return true, если игрок в whitelist'е, иначе false.
      */
     public boolean isWhitelisted(String username) {
         if (username == null) return false;
         String lowercaseUsername = username.toLowerCase();
-        return whitelistManager.isWhitelisted(lowercaseUsername) || whitelistManager.isTempWhitelisted(lowercaseUsername);
+        return whitelistManager.isWhitelisted(lowercaseUsername);
     }
 
     /**
      * Добавляет игрока в постоянный whitelist.
      *
      * @param username Имя игрока.
-     * @return true, если игрок успешно добавлен, false, если игрок уже в whitelist'е.
+     * @return true, если игрок успешно добавлен, false, если игрок уже в whitelist'е или имя некорректно.
      */
     public boolean addPlayer(String username) {
         if (username == null || !isValidUsername(username) || isWhitelisted(username)) {
@@ -48,59 +48,34 @@ public class KeKWhiteListAPI {
     }
 
     /**
-     * Добавляет игрока во временный whitelist на указанную длительность.
+     * Удаляет игрока из постоянного whitelist'а.
      *
      * @param username Имя игрока.
-     * @param duration Длительность действия временного whitelist'а.
-     * @return true, если игрок успешно добавлен, false, если игрок уже в whitelist'е.
-     */
-    public boolean addTempPlayer(String username, Duration duration) {
-        if (username == null || !isValidUsername(username) || duration == null || duration.isZero() || duration.isNegative() || isWhitelisted(username)) {
-            return false;
-        }
-        whitelistManager.addTempPlayer(username.toLowerCase(), duration);
-        return true;
-    }
-
-    /**
-     * Удаляет игрока из постоянного или временного whitelist'а.
-     *
-     * @param username Имя игрока.
-     * @return true, если игрок был удален, false, если игрока не было в whitelist'е.
+     * @return true, если игрок был удалён, false, если игрока не было в whitelist'е.
      */
     public boolean removePlayer(String username) {
         if (username == null) return false;
         String lowercaseUsername = username.toLowerCase();
-        boolean removedPermanent = whitelistManager.removePlayer(lowercaseUsername);
-        boolean removedTemp = whitelistManager.removeTempPlayer(lowercaseUsername);
-        if (removedPermanent) {
+        boolean removed = whitelistManager.removePlayer(lowercaseUsername);
+        if (removed) {
             configManager.saveConfig();
         }
-        return removedPermanent || removedTemp;
+        return removed;
     }
 
     /**
      * Получает список игроков в постоянном whitelist'е.
      *
-     * @return Неизменяемый набор имен игроков.
+     * @return Неизменяемый набор имён игроков.
      */
     public Set<String> getWhitelistedPlayers() {
         return whitelistManager.getWhitelistedPlayers();
     }
 
     /**
-     * Получает список игроков во временном whitelist'е с их сроками действия.
+     * Проверяет, включён ли whitelist.
      *
-     * @return Неизменяемая карта с именами игроков и сроками действия.
-     */
-    public Map<String, Instant> getTempWhitelistedPlayers() {
-        return whitelistManager.getTempWhitelistedPlayers();
-    }
-
-    /**
-     * Проверяет, включен ли whitelist.
-     *
-     * @return true, если whitelist включен, иначе false.
+     * @return true, если whitelist включён, иначе false.
      */
     public boolean isWhitelistEnabled() {
         return configManager.isWhitelistEnabled();
@@ -117,24 +92,6 @@ public class KeKWhiteListAPI {
     }
 
     /**
-     * Изменяет длительность временного whitelist'а для существующего игрока.
-     *
-     * @param username Имя игрока.
-     * @param duration Новая длительность.
-     * @return true, если длительность изменена, false, если игрок не в временном whitelist'е.
-     */
-    public boolean setTempWhitelistDuration(String username, Duration duration) {
-        if (username == null || duration == null || duration.isZero() || duration.isNegative()) {
-            return false;
-        }
-        if (!whitelistManager.isTempWhitelisted(username.toLowerCase())) {
-            return false;
-        }
-        whitelistManager.setTempWhitelistDuration(username.toLowerCase(), duration);
-        return true;
-    }
-
-    /**
      * Перезагружает конфигурацию и языковые файлы плагина.
      */
     public void reload() {
@@ -142,6 +99,12 @@ public class KeKWhiteListAPI {
         plugin.getLanguageManager().loadLanguage(configManager.getLanguage());
     }
 
+    /**
+     * Проверяет, является ли имя игрока валидным (3-16 символов, только буквы, цифры и подчёркивания).
+     *
+     * @param username Имя игрока.
+     * @return true, если имя валидно, иначе false.
+     */
     private boolean isValidUsername(String username) {
         return username != null && username.matches("[a-zA-Z0-9_]{3,16}");
     }

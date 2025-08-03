@@ -66,14 +66,11 @@ public class LanguageManager {
 
         if (lang.equals("ru")) {
             defaultMessages.put("no-whitelisted", "<white>Вас нет в Whitelist сервера. Подайте заявку на вступление в дискорде!\n<aqua>wiki.mkek.fun");
-            defaultMessages.put("usage", "<red>Использование: /kekwhitelist <add|addtemp|remove|on|off|list|reload> [игрок] [время]");
+            defaultMessages.put("usage", "<red>Использование: /kekwhitelist <add|remove|on|off|list|reload> [игрок]");
             defaultMessages.put("no-permission", "<red>Нет прав!");
             defaultMessages.put("add-usage", "<red>Использование: /kekwhitelist add <игрок>");
             defaultMessages.put("already-whitelisted", "<yellow>{player} уже в whitelist!");
             defaultMessages.put("added", "<green>{player} добавлен в whitelist!");
-            defaultMessages.put("addtemp-usage", "<red>Использование: /kekwhitelist addtemp <игрок> <время> (например, 1h, 30m, 2d)");
-            defaultMessages.put("invalid-time-format", "<red>Неверный формат времени! Используйте: <число><s|m|h|d> (например, 1h)");
-            defaultMessages.put("added-temp", "<green>{player} добавлен во временный whitelist на {time}!");
             defaultMessages.put("remove-usage", "<red>Использование: /kekwhitelist remove <игрок>");
             defaultMessages.put("not-whitelisted", "<yellow>{player} не в whitelist!");
             defaultMessages.put("removed", "<green>{player} удалён из whitelist!");
@@ -82,19 +79,15 @@ public class LanguageManager {
             defaultMessages.put("already-disabled", "<yellow>Whitelist уже выключен!");
             defaultMessages.put("disabled", "<green>Whitelist выключен!");
             defaultMessages.put("list-header", "<green>Игроки в whitelist: ");
-            defaultMessages.put("list-temp-header", "\n<green>Временный whitelist: ");
             defaultMessages.put("reloaded", "<green>Конфиг перезагружен!");
-            defaultMessages.put("unknown-subcommand", "<red>Неизвестная подкоманда! Используйте: add, addtemp, remove, on, off, list, reload");
+            defaultMessages.put("unknown-subcommand", "<red>Неизвестная подкоманда! Используйте: add, remove, on, off, list, reload");
         } else {
             defaultMessages.put("no-whitelisted", "<white>You are not on the server's whitelist. Apply to join on our Discord!\n<aqua>wiki.mkek.fun");
-            defaultMessages.put("usage", "<red>Usage: /kekwhitelist <add|addtemp|remove|on|off|list|reload> [player] [time]");
+            defaultMessages.put("usage", "<red>Usage: /kekwhitelist <add|remove|on|off|list|reload> [player]");
             defaultMessages.put("no-permission", "<red>No permission!");
             defaultMessages.put("add-usage", "<red>Usage: /kekwhitelist add <player>");
             defaultMessages.put("already-whitelisted", "<yellow>{player} is already whitelisted!");
             defaultMessages.put("added", "<green>{player} added to whitelist!");
-            defaultMessages.put("addtemp-usage", "<red>Usage: /kekwhitelist addtemp <player> <time> (e.g., 1h, 30m, 2d)");
-            defaultMessages.put("invalid-time-format", "<red>Invalid time format! Use: <number><s|m|h|d> (e.g., 1h)");
-            defaultMessages.put("added-temp", "<green>{player} added to temporary whitelist for {time}!");
             defaultMessages.put("remove-usage", "<red>Usage: /kekwhitelist remove <player>");
             defaultMessages.put("not-whitelisted", "<yellow>{player} is not whitelisted!");
             defaultMessages.put("removed", "<green>{player} removed from whitelist!");
@@ -103,9 +96,8 @@ public class LanguageManager {
             defaultMessages.put("already-disabled", "<yellow>Whitelist is already disabled!");
             defaultMessages.put("disabled", "<green>Whitelist disabled!");
             defaultMessages.put("list-header", "<green>Whitelisted players: ");
-            defaultMessages.put("list-temp-header", "\n<green>Temporary whitelist: ");
             defaultMessages.put("reloaded", "<green>Config reloaded!");
-            defaultMessages.put("unknown-subcommand", "<red>Unknown subcommand! Use: add, addtemp, remove, on, off, list, reload");
+            defaultMessages.put("unknown-subcommand", "<red>Unknown subcommand! Use: add, remove, on, off, list, reload");
         }
 
         try (FileWriter writer = new FileWriter(langFile)) {
