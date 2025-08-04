@@ -67,4 +67,8 @@ public class KeKWhiteList {
     public LanguageManager getLanguageManager() {
         return languageManager;
     }
+
+    public Logger getLogger() {
+        return logger;
+    }
 }

@@ -51,9 +51,14 @@ public class ConfigManager {
                             .map(String::toLowerCase)
                             .forEach(whitelistedPlayers::add);
                 }
+                logger.info("Конфигурация загружена из {}: whitelistEnabled={}, language={}, whitelistedPlayers={}",
+                        configFile.getPath(), whitelistEnabled, language, whitelistedPlayers);
+            } else {
+                logger.warn("Конфигурация пуста, создаётся конфигурация по умолчанию.");
+                saveDefaultConfig();
             }
         } catch (IOException e) {
-            logger.error("Failed to load config.yml", e);
+            logger.error("Не удалось загрузить config.yml: ", e);
             whitelistedPlayers.clear();
         }
     }
@@ -69,8 +74,9 @@ public class ConfigManager {
 
         try (FileWriter writer = new FileWriter(configFile)) {
             new Yaml().dump(defaultConfig, writer);
+            logger.info("Создана конфигурация по умолчанию в {}", configFile.getPath());
         } catch (IOException e) {
-            logger.error("Failed to save default config.yml", e);
+            logger.error("Не удалось сохранить config.yml по умолчанию: ", e);
         }
     }
 
@@ -83,8 +89,9 @@ public class ConfigManager {
 
         try (FileWriter writer = new FileWriter(configFile)) {
             new Yaml().dump(config, writer);
+            logger.info("Конфигурация сохранена в {}: whitelistedPlayers={}", configFile.getPath(), whitelistedPlayers);
         } catch (IOException e) {
-            logger.error("Failed to save config.yml", e);
+            logger.error("Не удалось сохранить config.yml: ", e);
         }
     }
 

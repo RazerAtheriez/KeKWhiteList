@@ -8,6 +8,7 @@ import java.util.Set;
 
 /**
  * API для управления постоянным белым списком в плагине KeKWhiteList.
+ * Все изменения белого списка сохраняются только в config.yml плагина KeKWhiteList.
  */
 public class KeKWhiteListAPI {
     private final KeKWhiteList plugin;
@@ -34,6 +35,7 @@ public class KeKWhiteListAPI {
 
     /**
      * Добавляет игрока в постоянный белый список.
+     * Сохраняет изменения только в config.yml плагина KeKWhiteList.
      *
      * @param username Имя игрока.
      * @return true, если игрок успешно добавлен, false, если игрок уже в белом списке или имя некорректно.
@@ -43,12 +45,14 @@ public class KeKWhiteListAPI {
             return false;
         }
         whitelistManager.addPlayer(username.toLowerCase());
-        configManager.saveConfig();
+        configManager.saveConfig(); // Сохраняет только в config.yml плагина KeKWhiteList
+        plugin.getLogger().info("Добавлен игрок {} в whitelist через API.", username);
         return true;
     }
 
     /**
      * Удаляет игрока из постоянного белого списка.
+     * Сохраняет изменения только в config.yml плагина KeKWhiteList.
      *
      * @param username Имя игрока.
      * @return true, если игрок был удалён, false, если игрока не было в белом списке.
@@ -58,7 +62,8 @@ public class KeKWhiteListAPI {
         String lowercaseUsername = username.toLowerCase();
         boolean removed = whitelistManager.removePlayer(lowercaseUsername);
         if (removed) {
-            configManager.saveConfig();
+            configManager.saveConfig(); // Сохраняет только в config.yml плагина KeKWhiteList
+            plugin.getLogger().info("Удалён игрок {} из whitelist через API.", username);
         }
         return removed;
     }
@@ -83,20 +88,23 @@ public class KeKWhiteListAPI {
 
     /**
      * Устанавливает состояние белого списка (вкл/выкл).
+     * Сохраняет изменения только в config.yml плагина KeKWhiteList.
      *
      * @param enabled true для включения, false для выключения.
      */
     public void setWhitelistEnabled(boolean enabled) {
         configManager.setWhitelistEnabled(enabled);
         configManager.saveConfig();
+        plugin.getLogger().info("Состояние whitelist изменено на {} через API.", enabled);
     }
 
     /**
-     * Перезагружает конфигурацию и языковые файлы плагина.
+     * Перезагружает конфигурацию и языковые файлы плагина KeKWhiteList.
      */
     public void reload() {
         configManager.loadConfig();
         plugin.getLanguageManager().loadLanguage(configManager.getLanguage());
+        plugin.getLogger().info("Конфигурация KeKWhiteList перезагружена через API.");
     }
 
     /**
