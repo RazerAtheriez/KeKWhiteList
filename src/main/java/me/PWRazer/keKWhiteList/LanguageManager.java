@@ -69,6 +69,7 @@ public class LanguageManager {
             defaultMessages.put("usage", "<red>Использование: /kekwhitelist <add|remove|on|off|list|reload> [игрок]");
             defaultMessages.put("no-permission", "<red>Нет прав!");
             defaultMessages.put("add-usage", "<red>Использование: /kekwhitelist add <игрок>");
+            defaultMessages.put("invalid-username", "<red>Некорректное имя игрока! Используйте 3-16 символов (буквы, цифры, подчёркивания).");
             defaultMessages.put("already-whitelisted", "<yellow>{player} уже в whitelist!");
             defaultMessages.put("added", "<green>{player} добавлен в whitelist!");
             defaultMessages.put("remove-usage", "<red>Использование: /kekwhitelist remove <игрок>");
@@ -86,6 +87,7 @@ public class LanguageManager {
             defaultMessages.put("usage", "<red>Usage: /kekwhitelist <add|remove|on|off|list|reload> [player]");
             defaultMessages.put("no-permission", "<red>No permission!");
             defaultMessages.put("add-usage", "<red>Usage: /kekwhitelist add <player>");
+            defaultMessages.put("invalid-username", "<red>Invalid username! Use 3-16 characters (letters, numbers, underscores).");
             defaultMessages.put("already-whitelisted", "<yellow>{player} is already whitelisted!");
             defaultMessages.put("added", "<green>{player} added to whitelist!");
             defaultMessages.put("remove-usage", "<red>Usage: /kekwhitelist remove <player>");

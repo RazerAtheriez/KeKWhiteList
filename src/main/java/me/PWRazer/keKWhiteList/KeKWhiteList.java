@@ -10,7 +10,6 @@ import com.velocitypowered.api.proxy.ProxyServer;
 import org.slf4j.Logger;
 
 import java.nio.file.Path;
-import java.time.Duration;
 
 @Plugin(
         id = "kekwhitelist",
@@ -43,21 +42,14 @@ public class KeKWhiteList {
         configManager.loadConfig();
         languageManager.loadLanguage(configManager.getLanguage());
         server.getCommandManager().register("kekwhitelist", new WhitelistCommand(this, server, configManager, whitelistManager, languageManager), "kwl");
-        startTempWhitelistCleaner();
         logger.info("KeKWhiteList loaded successfully!");
-    }
-
-    private void startTempWhitelistCleaner() {
-        server.getScheduler().buildTask(this, () ->
-                whitelistManager.cleanupTemporaryWhitelist()
-        ).repeat(Duration.ofSeconds(60)).schedule();
     }
 
     @Subscribe
     public void onPlayerLogin(LoginEvent event) {
         if (configManager.isWhitelistEnabled() && !event.getPlayer().hasPermission("kekwhitelist.bypass")) {
             String username = event.getPlayer().getUsername().toLowerCase();
-            if (!whitelistManager.isWhitelisted(username) && !whitelistManager.isTempWhitelisted(username)) {
+            if (!whitelistManager.isWhitelisted(username)) {
                 event.getPlayer().disconnect(languageManager.getMessage("no-whitelisted"));
                 logger.info("Player {} was denied access (not whitelisted).", username);
             }

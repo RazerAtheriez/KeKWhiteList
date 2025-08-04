@@ -7,7 +7,7 @@ import me.PWRazer.keKWhiteList.KeKWhiteList;
 import java.util.Set;
 
 /**
- * API для управления постоянным whitelist'ом в плагине KeKWhiteList.
+ * API для управления постоянным белым списком в плагине KeKWhiteList.
  */
 public class KeKWhiteListAPI {
     private final KeKWhiteList plugin;
@@ -21,10 +21,10 @@ public class KeKWhiteListAPI {
     }
 
     /**
-     * Проверяет, находится ли игрок в постоянном whitelist'е.
+     * Проверяет, находится ли игрок в постоянном белом списке.
      *
      * @param username Имя игрока.
-     * @return true, если игрок в whitelist'е, иначе false.
+     * @return true, если игрок в белом списке, иначе false.
      */
     public boolean isWhitelisted(String username) {
         if (username == null) return false;
@@ -33,10 +33,10 @@ public class KeKWhiteListAPI {
     }
 
     /**
-     * Добавляет игрока в постоянный whitelist.
+     * Добавляет игрока в постоянный белый список.
      *
      * @param username Имя игрока.
-     * @return true, если игрок успешно добавлен, false, если игрок уже в whitelist'е или имя некорректно.
+     * @return true, если игрок успешно добавлен, false, если игрок уже в белом списке или имя некорректно.
      */
     public boolean addPlayer(String username) {
         if (username == null || !isValidUsername(username) || isWhitelisted(username)) {
@@ -48,10 +48,10 @@ public class KeKWhiteListAPI {
     }
 
     /**
-     * Удаляет игрока из постоянного whitelist'а.
+     * Удаляет игрока из постоянного белого списка.
      *
      * @param username Имя игрока.
-     * @return true, если игрок был удалён, false, если игрока не было в whitelist'е.
+     * @return true, если игрок был удалён, false, если игрока не было в белом списке.
      */
     public boolean removePlayer(String username) {
         if (username == null) return false;
@@ -64,7 +64,7 @@ public class KeKWhiteListAPI {
     }
 
     /**
-     * Получает список игроков в постоянном whitelist'е.
+     * Получает список игроков в постоянном белом списке.
      *
      * @return Неизменяемый набор имён игроков.
      */
@@ -73,16 +73,16 @@ public class KeKWhiteListAPI {
     }
 
     /**
-     * Проверяет, включён ли whitelist.
+     * Проверяет, включён ли белый список.
      *
-     * @return true, если whitelist включён, иначе false.
+     * @return true, если белый список включён, иначе false.
      */
     public boolean isWhitelistEnabled() {
         return configManager.isWhitelistEnabled();
     }
 
     /**
-     * Устанавливает состояние whitelist'а (вкл/выкл).
+     * Устанавливает состояние белого списка (вкл/выкл).
      *
      * @param enabled true для включения, false для выключения.
      */
